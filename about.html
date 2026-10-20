@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>關於研究｜年齡與憂鬱、焦慮、壓力的關係</title>
+<link rel="stylesheet" href="style.css">
+<script>
+(function(){
+  var t = null;
+  try { t = localStorage.getItem("theme"); } catch(e) {}
+  if (t !== "dark" && t !== "light") t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", t);
+})();
+</script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html">DASS 年齡研究</a>
+      <a class="link" href="index.html">首頁</a>
+      <a class="link" href="results.html">研究結果</a>
+      <a class="link" href="ask.html">問答</a>
+      <a class="link active" href="about.html" aria-current="page">關於研究</a>
+      <button type="button" id="themeBtn" aria-pressed="false"></button>
+    </div>
+  </nav>
+<main>
+  <h1>關於研究</h1>
+  <p class="page-sub">資料來源、研究方法與樣本限制</p>
+
+  <section class="card prose">
+    <h2>資料來源</h2>
+    <p>資料來自 DASS（Depression Anxiety Stress Scales）線上版問卷，於 2017–2019 年間蒐集。問卷對任何人開放，受測者多是為了取得個人化的測驗結果而作答；測驗結束後，受測者可選擇填寫研究問卷，本資料僅包含同意填寫、且回答「答案是否準確並同意用於研究」為「是」的人。</p>
+    <p>本網站顯示的是依年齡層整理後的摘要統計（年齡層、人數、各分量表平均數與標準差，以及各嚴重度等級人數），存放於 Google Sheets「年齡層統計」資料表，網頁每次開啟時會直接讀取最新內容。</p>
+  </section>
+
+  <section class="card prose">
+    <h2>研究方法</h2>
+    <p>量表為 DASS-42，共 42 題，分屬憂鬱、焦慮、壓力三個分量表，每個分量表 14 題。受測者就「過去一週」各題描述的符合程度作答，原始選項為 1–4 分（1 = 完全不符合，4 = 非常符合或大部分時間符合）。分量表總分為各題得分相加，換算後範圍為 0–42，分數越高表示症狀越嚴重；再依分數分為正常、輕度、中度、重度、極重度五個嚴重度等級。</p>
+    <p>本研究依年齡層比較三個分量表的平均數，誤差線為 95% 信賴區間（平均數 ± 1.96 × 標準差 ÷ √人數），並呈現各年齡層在各嚴重度等級的人數比例。</p>
+  </section>
+
+  <section class="card prose">
+    <h2>樣本限制</h2>
+    <ul>
+      <li>受測者為自願上網填答，非隨機抽樣，結果不能代表一般人口。</li>
+      <li>各年齡層人數差異很大，人數很少的組別，平均數與信賴區間參考價值有限。</li>
+      <li>資料為同一時段蒐集的橫斷資料，只能描述年齡組間的差異，不能推論年齡造成症狀增減。</li>
+      <li>DASS 為自陳量表，不是臨床診斷。</li>
+    </ul>
+  </section>
+</main>
+<footer class="footer">
+  <span>組別：＿＿＿＿（請填入）</span>
+  <span>組員：＿＿＿＿、＿＿＿＿、＿＿＿＿（請填入）</span>
+</footer>
+<script>
+const themeBtn = document.getElementById("themeBtn");
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  themeBtn.textContent = t === "dark" ? "☀ 淺色模式" : "🌙 黑暗模式";
+  themeBtn.setAttribute("aria-pressed", t === "dark");
+}
+applyTheme(document.documentElement.getAttribute("data-theme"));
+themeBtn.addEventListener("click",()=>{
+  const t = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  applyTheme(t);
+  try { localStorage.setItem("theme", t); } catch(e) {}
+});
+</script>
+</body>
+</html>

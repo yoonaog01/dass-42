@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>問答｜年齡與憂鬱、焦慮、壓力的關係</title>
+<link rel="stylesheet" href="style.css">
+<script>
+(function(){
+  var t = null;
+  try { t = localStorage.getItem("theme"); } catch(e) {}
+  if (t !== "dark" && t !== "light") t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", t);
+})();
+</script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html">DASS 年齡研究</a>
+      <a class="link" href="index.html">首頁</a>
+      <a class="link" href="results.html">研究結果</a>
+      <a class="link active" href="ask.html" aria-current="page">問答</a>
+      <a class="link" href="about.html">關於研究</a>
+      <button type="button" id="themeBtn" aria-pressed="false"></button>
+    </div>
+  </nav>
+<main>
+  <h1>問答</h1>
+  <p class="page-sub">針對研究資料提問，取得說明</p>
+  <section class="card soon">
+    <span class="badge">即將推出</span>
+    <p>問答功能正在準備中，敬請期待。</p>
+  </section>
+</main>
+<footer class="footer">
+  <span>組別：＿＿＿＿（請填入）</span>
+  <span>組員：＿＿＿＿、＿＿＿＿、＿＿＿＿（請填入）</span>
+</footer>
+<script>
+const themeBtn = document.getElementById("themeBtn");
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  themeBtn.textContent = t === "dark" ? "☀ 淺色模式" : "🌙 黑暗模式";
+  themeBtn.setAttribute("aria-pressed", t === "dark");
+}
+applyTheme(document.documentElement.getAttribute("data-theme"));
+themeBtn.addEventListener("click",()=>{
+  const t = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  applyTheme(t);
+  try { localStorage.setItem("theme", t); } catch(e) {}
+});
+</script>
+</body>
+</html>

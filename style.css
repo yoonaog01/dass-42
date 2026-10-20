@@ -1,0 +1,80 @@
+/* 共用樣式：所有分頁皆引用 */
+  :root {
+    --bg: #f6f7f9; --card: #fff; --text: #1f2933; --muted: #5f6b7a; --line: #d8dde3;
+    --dep: #2f6fdb; --anx: #e8872b; --str: #2e9e6b;
+    --grid: #e3e7ec; --axis: #9aa5b1; --thead: #eef1f5; --thead-hover: #e2e7ee; --input: #fff; --seg-stroke: #fff;
+    --tip-bg: rgba(31,41,51,.94); --tip-text: #fff;
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] {
+    --bg: #14181d; --card: #1e242b; --text: #e6e9ed; --muted: #a0aab5; --line: #343d47;
+    --dep: #2f6fdb; --anx: #e8872b; --str: #2e9e6b;
+    --grid: #2f3841; --axis: #6b7784; --thead: #28303a; --thead-hover: #323c48; --input: #14181d; --seg-stroke: #1e242b;
+    --tip-bg: rgba(236,240,244,.96); --tip-text: #1f2933;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif; line-height: 1.6; }
+  main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+  h1 { font-size: 1.6rem; margin: 0; }
+  #themeBtn { flex: none; font: inherit; font-size: 14px; cursor: pointer; padding: 6px 12px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text); white-space: nowrap; }
+  #themeBtn:hover { background: var(--thead); }
+  .intro { color: var(--muted); margin: 0 0 20px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: center; }
+  .group { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .group > .label { font-weight: 600; }
+  label.opt { cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+  .swatch { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  #chartWrap { position: relative; }
+  svg { width: 100%; height: auto; display: block; }
+  svg text { font-family: inherit; fill: var(--text); }
+  .tip { position: fixed; pointer-events: none; background: var(--tip-bg); color: var(--tip-text); padding: 8px 10px;
+    border-radius: 6px; font-size: 13px; line-height: 1.5; display: none; z-index: 10; white-space: nowrap; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  th { background: var(--thead); position: sticky; top: 0; }
+  .tablewrap { overflow-x: auto; }
+  .tabletitle { font-weight: 600; margin: 0 0 8px; }
+  .notes h2 { font-size: 1.05rem; margin: 0 0 8px; }
+  .notes ul { margin: 0; padding-left: 20px; }
+  .notes li { margin-bottom: 4px; }
+  .hidden { display: none; }
+  .source { color: var(--muted); font-size: 13px; margin: -10px 0 16px; }
+  .error { color: #d64545; padding: 12px 0; }
+  select { font: inherit; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--input); color: var(--text); }
+  th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
+  th.sortable:hover { background: var(--thead-hover); }
+  .arrow { display: inline-block; width: 1em; color: var(--muted); }
+
+/* ---------- 多頁共用：導覽列、頁尾、首頁元件 ---------- */
+.nav { background: var(--card); border-bottom: 1px solid var(--line); }
+.nav-inner { max-width: 960px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.nav-brand { font-weight: 700; margin-right: auto; color: var(--text); text-decoration: none; }
+.nav a.link { color: var(--text); text-decoration: none; padding: 6px 12px; border-radius: 999px; font-size: 15px; }
+.nav a.link:hover { background: var(--thead); }
+.nav a.link.active { background: var(--dep); color: #fff; font-weight: 600; }
+.footer { max-width: 960px; margin: 0 auto; padding: 16px 16px 32px; color: var(--muted); font-size: 14px;
+  border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 4px 24px; }
+.lead { font-size: 1.05rem; margin: 0 0 20px; }
+.page-sub { color: var(--muted); margin: 4px 0 20px; }
+h2.sec { font-size: 1.15rem; margin: 24px 0 10px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 8px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.stat .num { font-size: 1.9rem; font-weight: 700; line-height: 1.2; }
+.stat .cap { color: var(--muted); font-size: 14px; margin-top: 4px; }
+.entries { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.entry { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px;
+  color: var(--text); text-decoration: none; }
+.entry:hover { border-color: var(--dep); }
+.entry b { display: block; font-size: 1.05rem; margin-bottom: 4px; }
+.entry span { color: var(--muted); font-size: 14px; }
+.soon { text-align: center; padding: 40px 16px; }
+.soon .badge { display: inline-block; background: var(--thead); border-radius: 999px; padding: 4px 14px; font-weight: 600; margin-bottom: 12px; }
+.prose h2 { font-size: 1.1rem; margin: 0 0 8px; }
+.prose p, .prose li { margin: 0 0 8px; }
+.prose ul { padding-left: 20px; margin: 0; }
