@@ -32,6 +32,11 @@
     <span class="badge">即將推出</span>
     <p>問答功能正在準備中，敬請期待。</p>
   </section>
+
+  <section class="card">
+    <button type="button" id="pingBtn">測試連線</button>
+    <pre id="pingOut" aria-live="polite" style="margin:12px 0 0;white-space:pre-wrap;word-break:break-word"></pre>
+  </section>
 </main>
 <footer class="footer">
   <span>組別：＿＿＿＿（請填入）</span>
@@ -49,6 +54,29 @@ themeBtn.addEventListener("click",()=>{
   const t = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
   applyTheme(t);
   try { localStorage.setItem("theme", t); } catch(e) {}
+});
+
+/* 測試連線：POST {"action":"test"} 到後端，並顯示回應 */
+const BACKEND_URL = "https://dass-42.snsd-yoonaog.workers.dev/";
+const pingBtn = document.getElementById("pingBtn");
+const pingOut = document.getElementById("pingOut");
+pingBtn.addEventListener("click", async () => {
+  pingBtn.disabled = true;
+  pingOut.textContent = "連線中…";
+  try {
+    const res = await fetch(BACKEND_URL, {
+      method: "POST",
+      // 用 text/plain 送出 JSON 字串，避免瀏覽器先發預檢請求；後端仍會當 JSON 解析
+      headers: { "Content-Type": "text/plain;charset=UTF-8" },
+      body: JSON.stringify({ action: "test" })
+    });
+    const text = await res.text();
+    pingOut.textContent = (res.ok ? "" : `錯誤（HTTP ${res.status}）\n`) + text;
+  } catch (err) {
+    pingOut.textContent = "連線失敗：" + err.message;
+  } finally {
+    pingBtn.disabled = false;
+  }
 });
 </script>
 </body>
