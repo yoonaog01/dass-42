@@ -28,9 +28,14 @@
 <main>
   <h1>問答</h1>
   <p class="page-sub">針對研究資料提問，取得說明</p>
-  <section class="card soon">
-    <span class="badge">即將推出</span>
-    <p>問答功能正在準備中，敬請期待。</p>
+  <section class="card">
+    <form id="askForm">
+      <label for="askInput" style="display:block;font-weight:600;margin-bottom:8px">請輸入問題</label>
+      <input type="text" id="askInput" autocomplete="off" placeholder="例如：哪個年齡層的憂鬱平均最高？"
+        style="width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--input);color:var(--text);margin-bottom:12px">
+      <button type="submit" id="askBtn">送出</button>
+    </form>
+    <pre id="askOut" aria-live="polite" style="margin:12px 0 0;white-space:pre-wrap;word-break:break-word;font:inherit"></pre>
   </section>
 
   <section class="card">
@@ -107,6 +112,37 @@ geminiBtn.addEventListener("click", async () => {
     geminiOut.textContent = "連線失敗：" + err.message;
   } finally {
     geminiBtn.disabled = false;
+  }
+});
+
+/* 問答：把問題傳給後端的 ask 動作，顯示回答 */
+const askForm = document.getElementById("askForm");
+const askInput = document.getElementById("askInput");
+const askBtn = document.getElementById("askBtn");
+const askOut = document.getElementById("askOut");
+askForm.addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const question = askInput.value.trim();
+  if (!question) { askOut.textContent = "請先輸入問題。"; return; }
+  askBtn.disabled = true;
+  askOut.textContent = "回答中";
+  try {
+    const res = await fetch(BACKEND_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=UTF-8" },
+      body: JSON.stringify({ action: "ask", question })
+    });
+    let data = null;
+    try { data = await res.json(); } catch (e) {}
+    if (res.ok && data && data.ok) {
+      askOut.textContent = data.text;
+    } else {
+      askOut.textContent = "失敗：" + ((data && data.error) || `HTTP ${res.status}`);
+    }
+  } catch (err) {
+    askOut.textContent = "連線失敗：" + err.message;
+  } finally {
+    askBtn.disabled = false;
   }
 });
 </script>
