@@ -37,6 +37,11 @@
     <button type="button" id="pingBtn">測試連線</button>
     <pre id="pingOut" aria-live="polite" style="margin:12px 0 0;white-space:pre-wrap;word-break:break-word"></pre>
   </section>
+
+  <section class="card">
+    <button type="button" id="geminiBtn">測試 Gemini</button>
+    <pre id="geminiOut" aria-live="polite" style="margin:12px 0 0;white-space:pre-wrap;word-break:break-word"></pre>
+  </section>
 </main>
 <footer class="footer">
   <span>組別：＿＿＿＿（請填入）</span>
@@ -76,6 +81,32 @@ pingBtn.addEventListener("click", async () => {
     pingOut.textContent = "連線失敗：" + err.message;
   } finally {
     pingBtn.disabled = false;
+  }
+});
+
+/* 測試 Gemini：送出固定問題，顯示後端回傳的文字 */
+const geminiBtn = document.getElementById("geminiBtn");
+const geminiOut = document.getElementById("geminiOut");
+geminiBtn.addEventListener("click", async () => {
+  geminiBtn.disabled = true;
+  geminiOut.textContent = "等待回覆中…";
+  try {
+    const res = await fetch(BACKEND_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=UTF-8" },
+      body: JSON.stringify({ action: "ask", question: "請用一句話自我介紹" })
+    });
+    let data = null;
+    try { data = await res.json(); } catch (e) {}
+    if (res.ok && data && data.ok) {
+      geminiOut.textContent = data.text;
+    } else {
+      geminiOut.textContent = "失敗：" + ((data && data.error) || `HTTP ${res.status}`);
+    }
+  } catch (err) {
+    geminiOut.textContent = "連線失敗：" + err.message;
+  } finally {
+    geminiBtn.disabled = false;
   }
 });
 </script>
